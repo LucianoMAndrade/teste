@@ -26,6 +26,18 @@ public class EmprestimoService {
         return emprestimoRepository.findAll();
     }
     
+    public List<Emprestimo> listarAtivos() {
+        return emprestimoRepository.findByDataDevolucaoIsNull();
+    }
+
+    public List<Emprestimo> listarPorAluno(Integer alunoId) {
+        return emprestimoRepository.findByAlunoId(alunoId);
+    }
+    
+    public List<Emprestimo> listarPorLivro(Integer livroId) {
+        return emprestimoRepository.findByLivroId(livroId);
+    }
+
     public Optional<Emprestimo> buscarPorId(Integer id) {
         return emprestimoRepository.findById(id);
     }
