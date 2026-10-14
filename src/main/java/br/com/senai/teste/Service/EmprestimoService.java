@@ -14,7 +14,7 @@ import br.com.senai.teste.model.Livro;
 import br.com.senai.teste.repository.AlunoRepository;
 import br.com.senai.teste.repository.EmprestimoRepository;
 import br.com.senai.teste.repository.LivroRepository;
-import jakarta.persistence.criteria.CriteriaBuilder.In;
+
 
 @Service 
 public class EmprestimoService {
@@ -22,6 +22,12 @@ public class EmprestimoService {
     private final AlunoRepository alunoRepository;
     private final LivroRepository livroRepository;
 
+    public EmprestimoService(EmprestimoRepository emprestimoRepository, AlunoRepository alunoRepository, LivroRepository livroRepository) {
+        this.emprestimoRepository = emprestimoRepository;
+        this.alunoRepository = alunoRepository;
+        this.livroRepository = livroRepository;
+    }
+    
     public List<Emprestimo> listar() {
         return emprestimoRepository.findAll();
     }
@@ -38,17 +44,21 @@ public class EmprestimoService {
         return emprestimoRepository.findByLivroId(livroId);
     }
 
+    public List<Emprestimo> listarAtrasados() {
+        return emprestimoRepository.findByDataPrevistaDevolucaoBeforeAndDataDevolucaoIsNull(LocalDate.now());
+    }
+
+    public List<Emprestimo> listarPorAlunoAtrasado(Integer alunoId) {
+        return emprestimoRepository.findByAlunoIdAndDataPrevistaDevolucaoBeforeAndDataDevolucaoIsNull(alunoId, LocalDate.now());
+    }
+
     public Optional<Emprestimo> buscarPorId(Integer id) {
         return emprestimoRepository.findById(id);
     }
     
-    public EmprestimoService(EmprestimoRepository emprestimoRepository, AlunoRepository alunoRepository, LivroRepository livroRepository) {
-        this.emprestimoRepository = emprestimoRepository;
-        this.alunoRepository = alunoRepository;
-        this.livroRepository = livroRepository;
-    }
+    
 
-    public Optional<Emprestimo> cadastrar(Integer alunoId, Integer livroId){
+    public Optional<Emprestimo> cadastrar(Integer alunoId, Integer livroId, LocalDate dataPrevistaDevolucao) {
     
         Optional<Aluno> aluno = alunoRepository.findById(alunoId);
         Optional<Livro> livro = livroRepository.findById(livroId);
@@ -67,6 +77,7 @@ public class EmprestimoService {
         emprestimo.setAluno(aluno.get());
         emprestimo.setLivro(livro.get());
         emprestimo.setDataEmprestimo(LocalDate.now());
+        emprestimo.setDataPrevistaDevolucao(dataPrevistaDevolucao);
         
         return Optional.of(emprestimoRepository.save(emprestimo));
 
@@ -86,6 +97,24 @@ public class EmprestimoService {
         } else {
             return Optional.empty();
         }
+    }
+
+    public Optional<Emprestimo> renovar(Integer id, LocalDate novaDataPrevista) {
+        Optional<Emprestimo> emprestimOptional = emprestimoRepository.findById(id);
+        if (emprestimOptional.isEmpty()){
+            return Optional.empty();
+        }
+        
+        Emprestimo emprestimo = emprestimOptional.get();
+        
+        if (emprestimo.getDataDevolucao() != null) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "O empréstimo já foi devolvido e não pode ser renovado.");
+        
+        } 
+        emprestimo.setDataPrevistaDevolucao(novaDataPrevista);
+        
+        return Optional.of(emprestimoRepository.save(emprestimo));
+        
     }
 
 }

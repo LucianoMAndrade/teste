@@ -17,8 +17,8 @@ import br.com.senai.teste.Service.AlunoService;
 import br.com.senai.teste.model.Aluno;
 import jakarta.validation.Valid;
 
-@RestController
-@RequestMapping("/aluno")
+    @RestController
+    @RequestMapping("/aluno")
 public class AlunoController {
     private final AlunoService alunoService;
 
