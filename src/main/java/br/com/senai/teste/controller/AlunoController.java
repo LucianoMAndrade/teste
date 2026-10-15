@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import br.com.senai.teste.Service.AlunoService;
+
 import br.com.senai.teste.model.Aluno;
+import br.com.senai.teste.service.AlunoService;
 import jakarta.validation.Valid;
 
     @RestController

@@ -1,6 +1,8 @@
 package br.com.senai.teste.controller;
 
 import br.com.senai.teste.repository.EmprestimoRepository;
+import br.com.senai.teste.service.EmprestimoService;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.senai.teste.Service.EmprestimoService;
 import br.com.senai.teste.dto.EmprestimoRequest;
 import br.com.senai.teste.dto.RenovacaoRequest;
 import br.com.senai.teste.model.Emprestimo;

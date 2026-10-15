@@ -1,4 +1,4 @@
-package br.com.senai.teste.Service;
+package br.com.senai.teste.service;
 
 import java.util.List;
 import java.util.Optional;
