@@ -93,13 +93,13 @@ public class Emprestimo {
     }
 
     public long getDiasAtraso() {
-        if (dataDevolucao != null ){
+        if (dataPrevistaDevolucao == null ){
             return 0;
         }
         
         LocalDate dataFinal;
 
-        if(dataDevolucao != null){
+        if(dataDevolucao == null){
             dataFinal = LocalDate.now();
         } else {
             dataFinal = dataDevolucao;
