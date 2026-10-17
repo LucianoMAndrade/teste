@@ -21,6 +21,8 @@ public class Aluno {
     @Email (message="Informe um e-mail válido.")
     private String email;
 
+    private String nomeArquivoFotoAluno;
+
     public Aluno() {
     }
 
@@ -48,4 +50,11 @@ public class Aluno {
     public void setEmail(String email) {
         this.email = email;
     }   
+
+    public String getNomeArquivoFotoAluno(){
+        return nomeArquivoFotoAluno;
+    }
+    public void setNomeArquivoFotoAluno( String nomeArquivoFotoAluno){
+        this.nomeArquivoFotoAluno=nomeArquivoFotoAluno;
+    }
 }

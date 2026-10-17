@@ -28,11 +28,11 @@ import jakarta.validation.Valid;
 @RestController 
 @RequestMapping ("/emprestimos")
 public class EmprestimoController {
-    private final EmprestimoRepository emprestimoRepository;
+    //private final EmprestimoRepository emprestimoRepository;
     private final EmprestimoService emprestimoService;
     public EmprestimoController(EmprestimoService emprestimoService, EmprestimoRepository emprestimoRepository){
         this.emprestimoService = emprestimoService;
-        this.emprestimoRepository = emprestimoRepository;
+        //this.emprestimoRepository = emprestimoRepository;
     }
 
     @GetMapping("/{id}")

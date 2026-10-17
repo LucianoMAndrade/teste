@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.senai.teste.model.Aluno;
 import br.com.senai.teste.service.AlunoService;
@@ -33,6 +35,13 @@ public class AlunoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(alunoCadastrado);
     }
 
+    @PostMapping ("/{id}/foto")
+    public ResponseEntity<Aluno> enviarFotoAluno(@PathVariable Integer id, @RequestParam("arquivo") MultipartFile arquivo ){
+        Aluno alunoAtualizado=alunoService.salvarFotoAluno(id, arquivo);
+        return ResponseEntity.ok(alunoAtualizado);
+    }
+    
+    
     @GetMapping
     public ResponseEntity<List<Aluno>> listar() {
         List<Aluno> aluno = alunoService.listar();
