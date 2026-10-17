@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import br.com.senai.teste.model.Livro;
 import br.com.senai.teste.service.LivroService;
@@ -31,6 +33,12 @@ public class LivroController {
     public ResponseEntity<Livro> cadastrar(@Valid @RequestBody Livro livro) {
         Livro livroCadastrado = livroService.cadastrar(livro);
         return ResponseEntity.status(HttpStatus.CREATED).body(livroCadastrado);
+    }
+
+    @PostMapping ("/{id}/capa")
+    public ResponseEntity<Livro> enviarCapa(@PathVariable Integer id, @RequestParam("arquivo") MultipartFile arquivo ){
+        Livro livroAtualizado=livroService.salvarCapa(id, arquivo);
+        return ResponseEntity.ok(livroAtualizado);
     }
 
     @GetMapping
